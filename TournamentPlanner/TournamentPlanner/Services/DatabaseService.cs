@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,11 +29,11 @@ namespace TournamentPlanner.Services
 
         private void ParseCsv()
         {
-            // credits to Michael Wiesinger for next 5 lines
+            // credits to Michael Wiesinger for next 3 lines
             using IServiceScope scope = scopeFactory.CreateScope();
-
             var dbContext = scope.ServiceProvider.GetRequiredService<TournamentDbContext>();
-            var matchesService = scope.ServiceProvider.GetRequiredService<MatchesService>();
+            var matchesService = scope.ServiceProvider.GetRequiredService<MatchService>();
+
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
 
@@ -56,6 +55,9 @@ namespace TournamentPlanner.Services
                 dbContext.Players.Add(player);
                 dbContext.SaveChanges();
             }
+
+            var matchService = new MatchService();
+            matchesService.CreateMatches();
         }
     }
 }

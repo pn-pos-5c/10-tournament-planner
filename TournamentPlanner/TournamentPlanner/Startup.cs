@@ -26,7 +26,8 @@ namespace TournamentPlanner
                 Configuration["ConnectionStrings:DefaultConnection"]
                 ));
 
-            services.AddScoped<MatchesService>();
+            services.AddScoped<MatchService>();
+            services.AddScoped<PlayerService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -13,3 +13,4 @@ C:\HTL\5_Klasse\POS\10-tournament-planner\TournamentPlanner\TournamentDb\obj\Deb
 C:\HTL\5_Klasse\POS\10-tournament-planner\TournamentPlanner\TournamentDb\obj\Debug\net5.0\TournamentDb.pdb
 C:\HTL\5_Klasse\POS\10-tournament-planner\TournamentPlanner\TournamentDb\obj\Debug\net5.0\TournamentDb.genruntimeconfig.cache
 C:\HTL\5_Klasse\POS\10-tournament-planner\TournamentPlanner\TournamentDb\bin\Debug\net5.0\appsettings.json
+C:\HTL\5_Klasse\POS\10-tournament-planner\TournamentPlanner\TournamentDb\obj\Debug\net5.0\TournamentDb.csproj.AssemblyReference.cache
