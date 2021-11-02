@@ -21,5 +21,11 @@ namespace TournamentPlanner.Controllers
             if (player == null) return BadRequest("Invalid Request Body");
             return Ok(playerService.AddPlayer(player));
         }
+
+        [HttpGet]
+        public IActionResult GetPlayers()
+        {
+            return Ok(playerService.GetPlayers());
+        }
     }
 }

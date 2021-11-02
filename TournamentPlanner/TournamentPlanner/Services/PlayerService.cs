@@ -1,4 +1,7 @@
-﻿using TournamentDb;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using TournamentDb;
 using TournamentPlanner.DTOs;
 
 namespace TournamentPlanner.Services
@@ -18,11 +21,22 @@ namespace TournamentPlanner.Services
             {
                 Firstname = player.Firstname,
                 Lastname = player.Lastname,
-                Gender = (TournamentDb.Gender)player.Gender
+                Gender = Enum.Parse<Gender>(player.Gender)
             });
             db.SaveChanges();
 
             return addedPlayer.Entity;
+        }
+
+        public List<PlayerDto> GetPlayers()
+        {
+            return db.Players.Select(player => new PlayerDto
+            {
+                Id = player.Id,
+                Firstname = player.Firstname,
+                Lastname = player.Lastname,
+                Gender = player.Gender.ToString()
+            }).ToList();
         }
     }
 }

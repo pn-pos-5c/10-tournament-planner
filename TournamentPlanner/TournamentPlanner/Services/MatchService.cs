@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TournamentDb;
+using TournamentPlanner.DTOs;
 
 namespace TournamentPlanner.Services
 {
@@ -30,7 +31,8 @@ namespace TournamentPlanner.Services
                 24 => 3,
                 28 => 4,
                 30 => 5,
-                _ => throw new Exception("Invalid amount of completet matches")
+                31 => -1,
+                _ => throw new Exception("Invalid amount of completed matches")
             };
         }
 
@@ -56,10 +58,23 @@ namespace TournamentPlanner.Services
         public void CreateMatches()
         {
             var players = new List<Player>();
-            if (GetCurrentRound() > 1) players = db.Players.ToList().Where(player => db.Matches.Where(match => match.Round == GetCurrentRound()).ToList().Exists(match => match.Winner == player.Id)).ToList();
+            if (GetCurrentRound() == -1) // tournament is over
+            {
+
+            }
+            else if (GetCurrentRound() > 1)
+            {
+                var matches = db.Matches.ToList().Where(match => match.Round == GetCurrentRound() - 1).ToList();
+                foreach (var match in matches)
+                {
+                    if (match.Winner == 1) players.Add(db.Players.Find(match.Player1Id));
+                    else players.Add(db.Players.Find(match.Player2Id));
+                }
+            }
             else players = db.Players.ToList();
 
-            for (int i = 0; i < players.Count / 2; i++)
+            int playersCount = players.Count;
+            for (int i = 0; i < playersCount / 2; i++)
             {
                 var player1 = players[random.Next(players.Count)];
                 players.Remove(player1);
@@ -91,9 +106,17 @@ namespace TournamentPlanner.Services
             return match;
         }
 
-        public List<Match> GetOpenMatches()
+        public List<MatchDto> GetOpenMatches()
         {
-            return db.Matches.Where(match => match.Winner == 0).ToList();
+            if (!db.Matches.Where(match => match.Winner == 0).Any()) CreateMatches();
+            return db.Matches.Select(match => new MatchDto
+            {
+                Id = match.Id,
+                Player1Id = match.Player1Id,
+                Player2Id = match.Player2Id,
+                Round = match.Round,
+                Winner = match.Winner
+            }).ToList();
         }
 
         public bool DeleteAllMatches()

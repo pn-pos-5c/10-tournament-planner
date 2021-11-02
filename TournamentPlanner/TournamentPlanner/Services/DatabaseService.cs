@@ -55,9 +55,6 @@ namespace TournamentPlanner.Services
                 dbContext.Players.Add(player);
                 dbContext.SaveChanges();
             }
-
-            var matchService = new MatchService();
-            matchesService.CreateMatches();
         }
     }
 }

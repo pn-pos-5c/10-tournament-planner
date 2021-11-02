@@ -1,0 +1,24 @@
+<button (click)="startTournament()">Start Tournament</button>
+
+<table>
+  <thead>
+  <tr>
+    <td>Id</td>
+    <td>Round</td>
+    <td>Player 1</td>
+    <td>Player 2</td>
+    <td>Winner</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let match of matches">
+    <td>{{match.id}}</td>
+    <td>{{match.round}}</td>
+    <td [ngClass]="{'winner': match.winner === 1, 'tournament-winner': match.round ===5 && match.winner === 1}"
+        (click)="setWinner(match.id, 1)">{{getPlayer(match.player1Id)}}</td>
+    <td [ngClass]="{'winner': match.winner === 2, 'tournament-winner': match.round ===5 && match.winner === 2}"
+        (click)="setWinner(match.id, 2)">{{getPlayer(match.player2Id)}}</td>
+    <td>{{match.winner}}</td>
+  </tr>
+  </tbody>
+</table>
